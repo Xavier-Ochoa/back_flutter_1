@@ -11,10 +11,5 @@
       "src": "/(.*)",
       "dest": "src/index.js"
     }
-  ],
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "DB_NAME": "@db_name",
-    "COLLECTION_NAME": "@collection_name"
-  }
+  ]
 }
