@@ -1,8 +1,12 @@
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONGODB_URI || 'mongodb+srv://admin:aplicacionesweb123@mybase1.6npokqg.mongodb.net/flutter_1?appName=MyBase1';
+const uri = process.env.MONGODB_URI;
 const dbName = process.env.DB_NAME || 'flutter_1';
 const collectionName = process.env.COLLECTION_NAME || 'items_coleccion';
+
+if (!uri) {
+  throw new Error('La variable de entorno MONGODB_URI no está definida');
+}
 
 let client = null;
 let db = null;
