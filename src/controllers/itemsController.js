@@ -155,11 +155,11 @@ async function deleteItem(req, res, next) {
   }
 }
 
-// POST /api/items/check-duplicate — verificar duplicado por título y fuente
+// POST /api/items/check-duplicate — verificar duplicado por título (sin importar mayúsculas/minúsculas ni fuente)
 async function checkDuplicate(req, res, next) {
   try {
     const collection = getCollection();
-    const { titulo, fuente } = req.body;
+    const { titulo } = req.body;
 
     if (!titulo) {
       return res.status(400).json({ success: false, error: 'titulo es requerido' });
@@ -167,7 +167,6 @@ async function checkDuplicate(req, res, next) {
 
     const existing = await collection.findOne({
       titulo: { $regex: `^${titulo}$`, $options: 'i' },
-      fuente: fuente || 'CheapShark API',
     });
 
     res.json({ success: true, isDuplicate: !!existing, data: existing || null });
