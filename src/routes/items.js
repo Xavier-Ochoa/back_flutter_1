@@ -8,10 +8,14 @@ const {
   deleteItem,
   checkDuplicate,
   getStats,
+  getFilterOptions,
 } = require('../controllers/itemsController');
 
 // Estadísticas
 router.get('/stats', getStats);
+
+// Opciones de filtro (categorías y plataformas en uso)
+router.get('/filters', getFilterOptions);
 
 // Verificar duplicado
 router.post('/check-duplicate', checkDuplicate);
