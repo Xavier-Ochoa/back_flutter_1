@@ -176,6 +176,28 @@ async function checkDuplicate(req, res, next) {
   }
 }
 
+// GET /api/items/filters — valores distintos de categoria y plataforma actualmente en uso
+async function getFilterOptions(req, res, next) {
+  try {
+    const collection = getCollection();
+
+    const [categorias, plataformas] = await Promise.all([
+      collection.distinct('categoria'),
+      collection.distinct('plataforma'),
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        categorias: categorias.filter(Boolean).sort(),
+        plataformas: plataformas.filter(Boolean).sort(),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 // GET /api/items/stats — estadísticas generales
 async function getStats(req, res, next) {
   try {
@@ -216,4 +238,4 @@ async function getStats(req, res, next) {
   }
 }
 
-module.exports = { getItems, getItemById, createItem, updateItem, deleteItem, checkDuplicate, getStats };
+module.exports = { getItems, getItemById, createItem, updateItem, deleteItem, checkDuplicate, getStats, getFilterOptions };
