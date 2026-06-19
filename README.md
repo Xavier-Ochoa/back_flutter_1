@@ -18,6 +18,28 @@ npm run dev
    - `MONGODB_URI` = tu string de conexión
    - `DB_NAME` = `flutter_1`
    - `COLLECTION_NAME` = `items_coleccion`
+   - `CLOUDINARY_CLOUD_NAME` = tu cloud name de Cloudinary
+   - `CLOUDINARY_API_KEY` = tu API key de Cloudinary
+   - `CLOUDINARY_API_SECRET` = tu API secret de Cloudinary
+
+## 🖼️ Subida de imágenes (Cloudinary)
+
+La app sube las imágenes directamente desde el celular (galería) en base64 al
+endpoint `POST /api/upload`, que las almacena en Cloudinary y devuelve la URL
+pública para guardarla en el campo `imagen` del item.
+
+Body esperado:
+```json
+{
+  "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ...",
+  "itemId": "uuid-del-item"
+}
+```
+
+Si se envía `itemId`, la imagen se guarda con ese mismo `public_id` en
+Cloudinary (`overwrite: true`), de modo que subir una nueva imagen para el
+mismo item reemplaza automáticamente la anterior en lugar de acumular
+archivos.
 
 ## 📋 Endpoints
 
@@ -33,6 +55,7 @@ npm run dev
 | DELETE | `/api/items/:id` | Eliminar item |
 | GET | `/api/cheapshark/deals` | Deals externos |
 | GET | `/api/cheapshark/deals/:id` | Detalle deal |
+| POST | `/api/upload` | Subir imagen a Cloudinary (`image`, `itemId`) |
 
 ## 🔍 Query params para GET /api/items
 
