@@ -4,6 +4,7 @@ const cors = require('cors');
 const { connectDB } = require('./config/database');
 const itemsRoutes = require('./routes/items');
 const cheapsharkRoutes = require('./routes/cheapshark');
+const uploadRoutes = require('./routes/upload');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
 const app = express();
@@ -60,6 +61,7 @@ app.get('/api', (req, res) => {
       'DELETE /api/items/:id               — Eliminar item',
       'GET    /api/cheapshark/deals        — Deals de CheapShark (page, pageSize, title)',
       'GET    /api/cheapshark/deals/:id    — Detalle de deal',
+      'POST   /api/upload                  — Subir imagen a Cloudinary (image, itemId)',
     ],
   });
 });
@@ -67,6 +69,7 @@ app.get('/api', (req, res) => {
 // ── Rutas principales ─────────────────────────────────────────────────────────
 app.use('/api/items', itemsRoutes);
 app.use('/api/cheapshark', cheapsharkRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // ── Manejo de errores ─────────────────────────────────────────────────────────
 app.use(notFound);
